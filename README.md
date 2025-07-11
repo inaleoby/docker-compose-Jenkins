@@ -20,12 +20,12 @@ Les services sont orchestrés via **Docker Compose** avec un réseau personnalis
 ### 🔧 Prérequis
 
 - Docker & Docker Compose installés
-- (Optionnel) Jenkins installé pour la CI/CD
+-  Jenkins installé pour la CI/CD
 
 ### ▶️ Lancer avec Docker Compose
 
 ```bash
-docker compose up --build
+docker compose up -d
 ```
 L'application sera disponible sur http://localhost:5000
 
@@ -63,3 +63,10 @@ POSTGRES_USER=user
 POSTGRES_PASSWORD=pass
 
 POSTGRES_DB=etudiants
+
+Nettoyage
+
+```bash
+docker compose down -v
+```
+
