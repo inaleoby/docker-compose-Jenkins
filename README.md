@@ -30,9 +30,8 @@ docker compose up -d
 L'application sera disponible sur http://localhost:5000
 
 Structure du projet
-bash
-Copier
-Modifier
+
+```bash
 .
 ├── app.py                 # Application Flask
 ├── index.html             # Frontend HTML + CSS intégré
@@ -41,28 +40,31 @@ Modifier
 ├── docker-compose.yml     # Orchestration des services
 ├── Jenkinsfile            # Pipeline CI/CD
 └── README.md              # Documentation du projet
-
+```
 
 Pipeline Jenkins (CI/CD)
-Un Jenkinsfile est fourni avec 3 étapes :
 
+Un Jenkinsfile est fourni avec 3 étapes :
+```
 Clone du dépôt Git
 
 Build des images via docker compose build
 
 Déploiement avec docker compose up -d
+```
 
 ⚠️ Jenkins doit avoir accès au Docker daemon de l’agent.
 
 
 Variables d’environnement utilisées
 Définies dans docker-compose.yml :
-
+```
 POSTGRES_USER=user
 
 POSTGRES_PASSWORD=pass
 
 POSTGRES_DB=etudiants
+```
 
 Nettoyage
 
