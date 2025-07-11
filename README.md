@@ -45,7 +45,8 @@ Structure du projet
 Pipeline Jenkins (CI/CD)
 
 Un Jenkinsfile est fourni avec 3 étapes :
-```
+
+```bash
 Clone du dépôt Git
 
 Build des images via docker compose build
@@ -58,7 +59,8 @@ Déploiement avec docker compose up -d
 
 Variables d’environnement utilisées
 Définies dans docker-compose.yml :
-```
+
+```bash
 POSTGRES_USER=user
 
 POSTGRES_PASSWORD=pass
