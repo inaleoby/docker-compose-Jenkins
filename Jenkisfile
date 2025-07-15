@@ -1,14 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSE_PROJECT_NAME = "tp"
-    }
 
     stages {
         stage('Clone') {
             steps {
-                git url: 'https://github.com/utilisateur/mon-repo.git', branch: 'main'
+                git url: 'https://github.com/inaleoby/docker-compose-Jenkins.git', branch: 'main'
             }
         }
 
@@ -20,6 +17,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                sh 'docker compose down -v'
                 sh 'docker compose up -d'
             }
         }
