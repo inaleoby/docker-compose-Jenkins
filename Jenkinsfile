@@ -3,7 +3,10 @@ pipeline {
 agent any
 
 environment {
-
+    
+        POSTGRES_DB = 'etudiants'
+        POSTGRES_USER = 'user'
+        POSTGRES_PASSWORD = 'pass'
         DOCKERHUB_CREDENTIALS = credentials('DOCKER-HUB')
         IMAGE_TAG = "v${BUILD_NUMBER}"
         LASTEST_TAG = "latest"
