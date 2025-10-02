@@ -21,16 +21,14 @@ stages {
     }
 
     stage('TEST') {
-
-        dir('tests') {
-
-             steps {
-            
-                sh 'pytest --maxfail=1 --disable-warnings -q'
-            }
+        steps {
+            dir('tests') {
+            sh 'pytest --maxfail=1 --disable-warnings -q'
         }
-       
+
+        }
     }
+
     
     stage('BUILD IMAGE DOCKER') {
 
@@ -55,7 +53,7 @@ stages {
         }
     }
 
-    stage('Deploy') {
+    stage('DEPLOY') {
         steps {
             sh 'docker compose down'
             sh 'docker compose up -d'
