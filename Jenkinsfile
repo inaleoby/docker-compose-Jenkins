@@ -11,21 +11,12 @@ environment {
 }
 
 stages {
-
-    stage('BUILD IMAGE DOCKER') {
-
-        steps {
-            
-                sh "docker build . -t espoir10/web:${IMAGE_TAG} -t espoir10/web:latest"
-            }
-    }
-            
     
     stage('BUILD IMAGE DOCKER') {
 
         steps {
             
-                sh "docker build . -t espoir10/web:${IMAGE_TAG} -t espoir10/web:latest"
+                sh "docker build . -t espoir10/web:${IMAGE_TAG} -t espoir10/web:${LASTEST_TAG}"
             }
     }
 
