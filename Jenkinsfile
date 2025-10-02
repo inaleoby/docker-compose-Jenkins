@@ -29,14 +29,12 @@ stages {
 
     stage('TEST') {
         steps {
-            dir('tests') {
-
+        
             sh '''
                 . ../venv/bin/activate
                 pytest --maxfail=1 --disable-warnings -q
             '''
-        }
-
+       
         }
     }
 
