@@ -23,7 +23,7 @@ stages {
     stage('TEST') {
         steps {
             dir('tests') {
-            sh 'pytest --maxfail=1 --disable-warnings -q'
+            sh '../venv/bin/pytest --maxfail=1 --disable-warnings -q'
         }
 
         }
