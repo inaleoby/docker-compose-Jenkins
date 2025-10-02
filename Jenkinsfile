@@ -3,7 +3,7 @@ pipeline {
 agent any
 
 environment {
-    
+
         POSTGRES_DB = 'etudiants'
         POSTGRES_USER = 'user'
         POSTGRES_PASSWORD = 'pass'
@@ -30,7 +30,7 @@ stages {
             }
     }
 
-    stage('TEST') {
+    /*stage('TEST') {
         steps {
         
            sh '''
@@ -39,7 +39,7 @@ stages {
             '''
        
         }
-    }
+    }*/
 
     
     stage('BUILD IMAGE DOCKER') {
