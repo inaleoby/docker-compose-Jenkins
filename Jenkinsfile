@@ -1,9 +1,6 @@
 pipeline {
 
-agent {
-
-    docker { image 'python:3.11' }
-}
+agent any
 
 environment {
 
@@ -19,7 +16,7 @@ stages {
 
         steps {
             
-                sh 'pip install -r requirements.txt'
+                sh 'pip install -r requirements.txt --break-system-packages'
             }
     }
 
