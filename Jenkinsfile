@@ -18,7 +18,7 @@ stages {
             
             //sh 'pip install -r requirements.txt --break-system-packages'
 
-            sh '''
+           sh '''
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
@@ -30,9 +30,9 @@ stages {
     stage('TEST') {
         steps {
         
-            sh '''
-                . ../venv/bin/activate
-                pytest --maxfail=1 --disable-warnings -q
+           sh '''
+            . venv/bin/activate
+            pytest --maxfail=1 --disable-warnings -q
             '''
        
         }
