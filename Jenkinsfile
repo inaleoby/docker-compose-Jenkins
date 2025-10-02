@@ -11,6 +11,26 @@ environment {
 }
 
 stages {
+
+    stage('INSTALLATION DES DEPENDANCES') {
+
+        steps {
+            
+                sh 'pip install -r requirements.txt'
+            }
+    }
+
+    stage('TEST') {
+
+        dir('tests') {
+
+             steps {
+            
+                sh 'pytest --maxfail=1 --disable-warnings -q'
+            }
+        }
+       
+    }
     
     stage('BUILD IMAGE DOCKER') {
 
