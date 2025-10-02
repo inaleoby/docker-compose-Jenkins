@@ -16,14 +16,25 @@ stages {
 
         steps {
             
-                sh 'pip install -r requirements.txt --break-system-packages'
+            //sh 'pip install -r requirements.txt --break-system-packages'
+
+            sh '''
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            '''
             }
     }
 
     stage('TEST') {
         steps {
             dir('tests') {
-            sh '../venv/bin/pytest --maxfail=1 --disable-warnings -q'
+
+            sh '''
+                . ../venv/bin/activate
+                pytest --maxfail=1 --disable-warnings -q
+            '''
         }
 
         }
