@@ -1,32 +1,95 @@
 pipeline {
-    agent any
 
+agent any
 
-    stages {
-        stage('Clone') {
-            steps {
-                git url: 'https://github.com/inaleoby/docker-compose-Jenkins.git', branch: 'main'
+environment {
+
+        DOCKERHUB_CREDENTIALS = credentials('DOCKER-HUB')
+        IMAGE_TAG = "v${BUILD_NUMBER}"
+        LASTEST_TAG = "latest"
+
+}
+
+stages {
+
+    stage('BUILD IMAGE DOCKER') {
+
+        steps {
+            
+                sh "docker build . -t espoir10/web:${IMAGE_TAG} -t espoir10/web:latest"
             }
-        }
+    }
+            
+    
+    stage('BUILD IMAGE DOCKER') {
 
-        stage('Build') {
-            steps {
-                sh 'docker compose build'
+        steps {
+            
+                sh "docker build . -t espoir10/web:${IMAGE_TAG} -t espoir10/web:latest"
             }
-        }
+    }
 
-        stage('Deploy') {
-            steps {
-                sh 'docker compose down -v'
-                sh 'docker compose up -d'
-            }
+    stage('LOGIN TO DOCKER HUB') {
+        steps {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
         }
     }
 
-    post {
-        always {
-            sh 'docker compose ps'
+    stage('PUSH IMAGES') {
+        steps {
+            sh """
+                docker push espoir10/web:${IMAGE_TAG}
+                docker push espoir10/web:${LASTEST_TAG}
+            """
         }
+    }
+
+    stage('Deploy') {
+        steps {
+            sh 'docker compose down'
+            sh 'docker compose up -d'
+        }
+    }
+} // fin du bloc stages
+
+post {
+    success {
+        emailext (
+            subject: "✅ BUILD REUSSI - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """<html>
+                        <body>
+                            <p>Bonjour,</p>
+                            <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a été exécuté avec succès.</p>
+                            <p>Consultez les logs ici : <a href=\"${env.BUILD_URL}\">${env.BUILD_URL}</a></p>
+                        </body>
+                     </html>""",
+            to: 'obympeespoir@gmail.com, dangawa2000@gmail.com, oldpipa16@gmail.com, ndiayekhardiata2024@gmail.com',
+            from: 'oldpipa16@gmail.com',
+            replyTo: 'oldpipa16@gmail.com',
+            mimeType: 'text/html'
+        )
+    }
+
+    failure {
+        emailext (
+            subject: "❌ BUILD ECHOUE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """<html>
+                        <body>
+                            <p>Bonjour,</p>
+                            <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a échoué.</p>
+                            <p>Consultez les logs ici : <a href=\"${env.BUILD_URL}\">${env.BUILD_URL}</a></p>
+                        </body>
+                     </html>""",
+            to: 'obympeespoir@gmail.com',
+            from: 'oldpipa16@gmail.com',
+            replyTo: 'oldpipa16@gmail.com',
+            mimeType: 'text/html'
+        )
+    }
+
+    always {
+        sh 'docker logout'
     }
 }
 
+}
